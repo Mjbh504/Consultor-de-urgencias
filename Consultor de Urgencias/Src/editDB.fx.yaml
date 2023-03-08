@@ -1,0 +1,811 @@
+editDB As screen:
+
+    Button2_16 As button:
+        BorderThickness: =0
+        DisabledBorderColor: =RGBA(109, 49, 162, 1)
+        DisabledColor: =RGBA(255, 255, 255, 1)
+        DisabledFill: =RGBA(109, 49, 162, 1)
+        DisplayMode: =DisplayMode.Disabled
+        Height: =123
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Text: ="Hola Master "&User().FullName
+        Width: =1366
+        ZIndex: =1
+
+    "'forma de envio' As form":
+        DataSource: ='Urgencias Por Planta Diario'
+        DefaultMode: =FormMode.New
+        Height: =642
+        Item: =LookUp('Urgencias Por Planta Diario',ID=ItemID)
+        NumberOfColumns: =12
+        Width: =1366
+        Y: =126
+        ZIndex: =3
+
+        "'Issued Date_DataCard1' As typedDataCard.dateEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Issued_x0020_Date"
+            Default: =ThisItem.'Issued Date'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"Issued_x0020_Date")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =DataCardValue11.SelectedDate
+            Width: =339
+            X: =4
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey11 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue11 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Purple)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Fill: =RGBA(0, 0, 0, 0)
+                IconBackground: =RGBA(109, 49, 162, 1)
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey11.Y + DataCardKey11.Height + 5
+                ZIndex: =2
+
+            ErrorMessage11 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue11.Y + DataCardValue11.Height
+                ZIndex: =3
+
+            StarVisible11 As label:
+                Align: =Align.Center
+                Height: =DataCardKey11.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey11.Y
+                ZIndex: =4
+
+        "'ApparelNet Lot_DataCard1' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Title"
+            Default: =ThisItem.'ApparelNet Lot'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"Title")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Urgencias Por Planta Diario'], DataSourceInfo.MaxLength, "Title")
+            Required: =true
+            Update: =DataCardValue1.Text
+            Width: =339
+            X: =0
+            Y: =0
+            ZIndex: =4
+
+            DataCardKey1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey1.Y + DataCardKey1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue1.Y + DataCardValue1.Height
+                ZIndex: =3
+
+            StarVisible1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey1.Y
+                ZIndex: =4
+
+        Location_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_1"
+            Default: =ThisItem.Location
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_1")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Urgencias Por Planta Diario'], DataSourceInfo.MaxLength, "field_1")
+            Required: =true
+            Update: =DataCardValue2.Text
+            Width: =339
+            X: =3
+            Y: =0
+            ZIndex: =4
+
+            DataCardKey2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey2.Y + DataCardKey2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue2.Y + DataCardValue2.Height
+                ZIndex: =3
+
+            StarVisible2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey2.Y
+                ZIndex: =4
+
+        ESTILO_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_2"
+            Default: =ThisItem.ESTILO
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_2")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Urgencias Por Planta Diario'], DataSourceInfo.MaxLength, "field_2")
+            Required: =true
+            Update: =DataCardValue3.Text
+            Width: =339
+            X: =6
+            Y: =0
+            ZIndex: =4
+
+            DataCardKey3 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue3 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey3.Y + DataCardKey3.Height + 5
+                ZIndex: =2
+
+            ErrorMessage3 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue3.Y + DataCardValue3.Height
+                ZIndex: =3
+
+            StarVisible3 As label:
+                Align: =Align.Center
+                Height: =DataCardKey3.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey3.Y
+                ZIndex: =4
+
+        COLOR_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_3"
+            Default: =ThisItem.COLOR
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_3")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Urgencias Por Planta Diario'], DataSourceInfo.MaxLength, "field_3")
+            Required: =true
+            Update: =DataCardValue4.Text
+            Width: =339
+            X: =9
+            Y: =0
+            ZIndex: =4
+
+            DataCardKey4 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue4 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey4.Y + DataCardKey4.Height + 5
+                ZIndex: =2
+
+            ErrorMessage4 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue4.Y + DataCardValue4.Height
+                ZIndex: =3
+
+            StarVisible4 As label:
+                Align: =Align.Center
+                Height: =DataCardKey4.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey4.Y
+                ZIndex: =4
+
+        TALLA_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_4"
+            Default: =ThisItem.TALLA
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_4")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Urgencias Por Planta Diario'], DataSourceInfo.MaxLength, "field_4")
+            Required: =true
+            Update: =DataCardValue5.Text
+            Width: =339
+            X: =0
+            Y: =1
+            ZIndex: =4
+
+            DataCardKey5 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue5 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey5.Y + DataCardKey5.Height + 5
+                ZIndex: =2
+
+            ErrorMessage5 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue5.Y + DataCardValue5.Height
+                ZIndex: =3
+
+            StarVisible5 As label:
+                Align: =Align.Center
+                Height: =DataCardKey5.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey5.Y
+                ZIndex: =4
+
+        Planta_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_5"
+            Default: =ThisItem.Planta
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_5")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Urgencias Por Planta Diario'], DataSourceInfo.MaxLength, "field_5")
+            Required: =true
+            Update: =DataCardValue6.Text
+            Width: =339
+            X: =3
+            Y: =1
+            ZIndex: =4
+
+            DataCardKey6 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue6 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey6.Y + DataCardKey6.Height + 5
+                ZIndex: =2
+
+            ErrorMessage6 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue6.Y + DataCardValue6.Height
+                ZIndex: =3
+
+            StarVisible6 As label:
+                Align: =Align.Center
+                Height: =DataCardKey6.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey6.Y
+                ZIndex: =4
+
+        Supervisor_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_6"
+            Default: =ThisItem.Supervisor
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_6")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Urgencias Por Planta Diario'], DataSourceInfo.MaxLength, "field_6")
+            Required: =true
+            Update: =DataCardValue7.Text
+            Width: =339
+            X: =6
+            Y: =1
+            ZIndex: =4
+
+            DataCardKey7 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue7 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey7.Y + DataCardKey7.Height + 5
+                ZIndex: =2
+
+            ErrorMessage7 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue7.Y + DataCardValue7.Height
+                ZIndex: =3
+
+            StarVisible7 As label:
+                Align: =Align.Center
+                Height: =DataCardKey7.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey7.Y
+                ZIndex: =4
+
+        Requerido_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_7"
+            Default: =ThisItem.Requerido
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_7")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =Value(DataCardValue8.Text)
+            Width: =339
+            X: =9
+            Y: =1
+            ZIndex: =4
+
+            DataCardKey8 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue8 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey8.Y + DataCardKey8.Height + 5
+                ZIndex: =2
+
+            ErrorMessage8 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue8.Y + DataCardValue8.Height
+                ZIndex: =3
+
+            StarVisible8 As label:
+                Align: =Align.Center
+                Height: =DataCardKey8.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey8.Y
+                ZIndex: =4
+
+        Embarque_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_8"
+            Default: =ThisItem.'DZ Lote'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_8")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: |
+                =true
+            Update: =Value(DataCardValue9.Text)
+            Width: =339
+            X: =0
+            Y: =2
+            ZIndex: =4
+
+            DataCardKey9 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue9 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Purple)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey9.Y + DataCardKey9.Height + 5
+                ZIndex: =2
+
+            ErrorMessage9 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue9.Y + DataCardValue9.Height
+                ZIndex: =3
+
+            StarVisible9 As label:
+                Align: =Align.Center
+                Height: =DataCardKey9.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey9.Y
+                ZIndex: =4
+
+        Balance_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="field_9"
+            Default: =ThisItem.'%Efectividad'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Urgencias Por Planta Diario'],DataSourceInfo.DisplayName,"field_9")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =Value(DataCardValue10.Text)
+            Width: =339
+            X: =3
+            Y: =2
+            ZIndex: =4
+
+            DataCardKey10 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue10 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Purple)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey10.Y + DataCardKey10.Height + 5
+                ZIndex: =2
+
+            ErrorMessage10 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue10.Y + DataCardValue10.Height
+                ZIndex: =3
+
+            StarVisible10 As label:
+                Align: =Align.Center
+                Height: =DataCardKey10.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey10.Y
+                ZIndex: =4
+
+    savebutton As button:
+        DisplayMode: |-
+            =If('forma de envio'.DisplayMode = DisplayMode.View,
+            DisplayMode.Disabled,
+            DisplayMode.Edit
+            )
+        Fill: =RGBA(109, 49, 162, 1)
+        HoverFill: =RGBA(109, 49, 162, 0.5)
+        OnSelect: =SubmitForm('forma de envio'); ResetForm('forma de envio');Navigate(actualizar,ScreenTransition.Fade);
+        PressedBorderColor: =RGBA(152, 208, 70, 1)
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =RGBA(152, 208, 70, 1)
+        RadiusBottomLeft: =20
+        RadiusBottomRight: =20
+        RadiusTopLeft: =20
+        RadiusTopRight: =20
+        Text: ="Guardar"
+        X: =32
+        Y: =476
+        ZIndex: =4
+
+    cancelbutton As button:
+        Fill: =RGBA(109, 49, 162, 1)
+        HoverFill: =RGBA(109, 49, 162, 0.5)
+        OnSelect: |-
+            =Navigate(actualizar,ScreenTransition.Cover);
+             ResetForm('forma de envio');
+        PressedBorderColor: =RGBA(255, 0, 0, 1)
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =RGBA(255, 0, 0, 1)
+        RadiusBottomLeft: =20
+        RadiusBottomRight: =20
+        RadiusTopLeft: =20
+        RadiusTopRight: =20
+        Text: ="Cancelar"
+        X: =229
+        Y: =476
+        ZIndex: =5
+

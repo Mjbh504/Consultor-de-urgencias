@@ -1,0 +1,175 @@
+{
+  "02aeabb3-4f2f-49b6-8b59-388ae245670f": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Excel Online (Empresas)",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1615/1.0.1615.3163/excelonlinebusiness/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_excelonlinebusiness",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "6084ced2-8466-480d-b972-9a6b2a569ae6"
+    ],
+    "id": "02aeabb3-4f2f-49b6-8b59-388ae245670f"
+  },
+  "10b2ab40-3e98-4af0-8589-145a3a84da38": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/juanq/gateway/greyhound/3000.150.11/1.0.1613.3116/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://hanes.sharepoint.com/sites/CholomaLogisticandSuppliesTeamsite": {
+        "dataSources": {
+          "BugReport": {
+            "tableName": "62ec7e8f-3072-4b3d-945f-e25907794cfd"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "BugReport"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "10b2ab40-3e98-4af0-8589-145a3a84da38"
+  },
+  "6084ced2-8466-480d-b972-9a6b2a569ae6": {
+    "connectionParameters": {
+      "workFlowCallbackUri": "https://prod-128.westus.logic.azure.com:443/workflows/9d9a9cb1e20349da8ba34121868ea89f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=dUeV7Z5BCo8z6gk0JH47OgwbTltt9H-iKz7qLiZtXKI",
+      "workflowEndpoint": "/subscriptions/34eedfbf-3e33-475d-b510-23537fba3dc9/resourceGroups/333b3fe469f04013a0eb5bcb97f52644-83850a49228f40c4a2bcc804db5ff3aa/providers/Microsoft.Logic/workflows/1b41b10b-172e-495d-bba7-1d7598f7471c",
+      "workflowName": "1b41b10b-172e-495d-bba7-1d7598f7471c",
+      "workflowPath": "/subscriptions/34eedfbf-3e33-475d-b510-23537fba3dc9/resourceGroups/333b3fe469f04013a0eb5bcb97f52644-83850a49228f40c4a2bcc804db5ff3aa/providers/Microsoft.Logic/workflows/1b41b10b-172e-495d-bba7-1d7598f7471c"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Flujos lógicos",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1615/1.0.1615.3163/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "02aeabb3-4f2f-49b6-8b59-388ae245670f": {
+          "value": "shared_excelonlinebusiness"
+        },
+        "69dada9f-5d9c-402d-bb4a-0b3ee45f9808": {
+          "value": "shared_office365users"
+        },
+        "8a4a49c0-7c75-4955-8944-e46cc3816686": {
+          "value": "shared_sharepointonline"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "1b41b10b-172e-495d-bba7-1d7598f7471c"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_excelonlinebusiness": {
+          "value": "02aeabb3-4f2f-49b6-8b59-388ae245670f"
+        },
+        "shared_office365users": {
+          "value": "69dada9f-5d9c-402d-bb4a-0b3ee45f9808"
+        },
+        "shared_sharepointonline": {
+          "value": "8a4a49c0-7c75-4955-8944-e46cc3816686"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "1b41b10b-172e-495d-bba7-1d7598f7471c"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "upDataExcelToSharepoint(Alpha)"
+    ],
+    "dependencies": {
+      "shared_excelonlinebusiness": "02aeabb3-4f2f-49b6-8b59-388ae245670f",
+      "shared_office365users": "69dada9f-5d9c-402d-bb4a-0b3ee45f9808",
+      "shared_sharepointonline": "8a4a49c0-7c75-4955-8944-e46cc3816686"
+    },
+    "dependents": [],
+    "id": "6084ced2-8466-480d-b972-9a6b2a569ae6"
+  },
+  "69dada9f-5d9c-402d-bb4a-0b3ee45f9808": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Usuarios de Office 365",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1618/1.0.1618.3179/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "6084ced2-8466-480d-b972-9a6b2a569ae6"
+    ],
+    "id": "69dada9f-5d9c-402d-bb4a-0b3ee45f9808"
+  },
+  "8a4a49c0-7c75-4955-8944-e46cc3816686": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/juanq/gateway/greyhound/3000.150.11/1.0.1613.3116/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://hanes.sharepoint.com/sites/CholomaLogisticandSuppliesTeamsite": {
+        "dataSources": {
+          "Equipos": {
+            "tableName": "ff5de2fd-e268-4685-8779-3a95dedeabf0"
+          },
+          "Estilos H1": {
+            "tableName": "c9a89250-d9a9-40d0-8cba-04a7c1dfbbf3"
+          },
+          "Plantas": {
+            "tableName": "73cb1abd-9540-4175-a1c3-0d38354f3b0f"
+          },
+          "registros": {
+            "tableName": "96ee99e2-86fe-43df-83a7-a10528866949"
+          },
+          "Supervisores": {
+            "tableName": "fa095c38-8c18-4f3a-8118-38c075f9c089"
+          },
+          "Urgencias Por Planta Diario": {
+            "tableName": "68b6cfc3-298a-4e95-8d9d-4ccd2d3f8d47"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "Urgencias Por Planta Diario",
+      "registros",
+      "Estilos H1",
+      "Equipos",
+      "Plantas",
+      "Supervisores"
+    ],
+    "dependencies": {},
+    "dependents": [
+      "6084ced2-8466-480d-b972-9a6b2a569ae6"
+    ],
+    "id": "8a4a49c0-7c75-4955-8944-e46cc3816686"
+  }
+}

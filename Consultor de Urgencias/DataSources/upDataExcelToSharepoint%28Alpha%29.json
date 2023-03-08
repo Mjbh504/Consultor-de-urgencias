@@ -1,0 +1,10 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_logicflows",
+    "FlowNameId": "1b41b10b-172e-495d-bba7-1d7598f7471c",
+    "Name": "upDataExcelToSharepoint(Alpha)",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo",
+    "WorkflowEntityId": null
+  }
+]

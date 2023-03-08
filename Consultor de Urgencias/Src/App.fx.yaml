@@ -1,0 +1,25 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |
+        =Set(
+            varPermisos,
+            LookUp(
+                registros,
+                correos = User().Email
+            ).permisos
+        );
+        Set(
+            varplanta,
+            LookUp(
+                registros,
+                correos = User().Email
+            ).Planta
+        );
+        Set(
+            varnombres,
+            LookUp(
+                registros,
+                correos = User().Email
+            ).Nombres
+        );
+

@@ -1,0 +1,894 @@
+consulta As screen:
+    Height: =If(Self.Printing,GaleriaConsulta.TemplateHeight*CountRows(GaleriaConsulta.AllItems)+GaleriaConsulta.Y, Max(App.Height, App.MinScreenHeight))
+
+    Button2_28 As button:
+        BorderThickness: =0
+        DisabledBorderColor: =RGBA(109, 49, 162, 1)
+        DisabledColor: =RGBA(255, 255, 255, 1)
+        DisabledFill: =RGBA(109, 49, 162, 1)
+        DisplayMode: =DisplayMode.Disabled
+        Height: =224
+        Text: =""
+        Width: =1366
+        ZIndex: =1
+
+    Button2_1 As button:
+        AutoDisableOnSelect: =false
+        BorderThickness: =0
+        DisabledBorderColor: =RGBA(109, 49, 162, 1)
+        DisabledColor: =RGBA(255, 255, 255, 1)
+        DisabledFill: =RGBA(255, 0, 0, 1)
+        DisplayMode: =DisplayMode.Disabled
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Text: ="Supervisor"
+        Visible: =Not(Parent.Printing)
+        Width: =120
+        X: =186
+        Y: =123
+        ZIndex: =3
+
+    Button2_2 As button:
+        BorderThickness: =0
+        DisabledColor: =RGBA(255, 255, 255, 1)
+        DisabledFill: =RGBA(166, 166, 166, 1)
+        Fill: =RGBA(255, 0, 0, 1)
+        HoverFill: =ColorFade(RGBA(218, 41, 28, 1), -20%)
+        OnSelect: |-
+            =Reset(cbxPlanta);
+            Reset(cbxSupervisores);
+            Reset(cbxEquipo);
+            Reset(cbxEstilos);
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Text: ="Desfiltrar"
+        Tooltip: ="Actualize la lista"
+        Visible: =Not(Parent.Printing)
+        Width: =110
+        X: =1126
+        Y: =123
+        ZIndex: =4
+
+    Image1 As image:
+        Height: =123
+        Image: ='1200px-Hanes-logo.svg-1024x899_1'
+        Width: =135
+        ZIndex: =5
+
+    Button2_3 As button:
+        AutoDisableOnSelect: =false
+        BorderThickness: =0
+        DisabledBorderColor: =RGBA(109, 49, 162, 1)
+        DisabledColor: =RGBA(255, 255, 255, 1)
+        DisabledFill: =RGBA(255, 0, 0, 1)
+        DisplayMode: =DisplayMode.Disabled
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Text: ="Estilo"
+        Visible: =Not(Parent.Printing)
+        Width: =66
+        X: =862
+        Y: =123
+        ZIndex: =6
+
+    Button2_4 As button:
+        AutoDisableOnSelect: =false
+        BorderThickness: =0
+        DisabledBorderColor: =RGBA(109, 49, 162, 1)
+        DisabledColor: =RGBA(255, 255, 255, 1)
+        DisabledFill: =RGBA(255, 0, 0, 1)
+        DisplayMode: =DisplayMode.Disabled
+        Height: =41
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Text: ="Planta"
+        Visible: =Not(Parent.Printing)
+        Width: =75
+        Y: =123
+        ZIndex: =7
+
+    cbxPlanta As combobox:
+        BorderColor: =RGBA(255, 0, 0, 1)
+        BorderThickness: =1
+        ChevronBackground: =RGBA(255, 0, 0, 1)
+        DefaultSelectedItems: =[varplanta]
+        DisplayFields: =["Result"]
+        Height: =41
+        HoverFill: =RGBA(237, 237, 237, 1)
+        InputTextPlaceholder: ="Planta"
+        Items: |-
+            =Ungroup(
+                Table(
+                    {cbxPlanta: Table({Result:"TODOS",Value:1})},
+                    {
+                        cbxPlanta: Sort(
+                            Filter(
+                                Distinct(
+                                    Plantas,
+                                    Plantas
+                                ),
+                                Not(IsBlank(Result))
+                            )
+                            ,
+                            Result
+                        )
+                    }
+                ),
+                "cbxPlanta"
+            )
+        OnChange: |-
+            =ClearCollect(colUrgencias,
+            Filter('Urgencias Por Planta Diario',
+                IsBlank(cbxSupervisores.SelectedItems.Value) ||
+                IsBlank(cbxSupervisores.Selected.Result) ||
+                IsEmpty(cbxSupervisores.Selected) ||
+                IsNumeric(cbxSupervisores.Selected.Value) ||
+                Supervisor = cbxSupervisores.Selected.Result
+                ,
+                IsBlank(cbxPlanta.SelectedItems.Value) ||
+                IsBlank(cbxPlanta.Selected.Result) ||
+                IsEmpty(cbxPlanta.Selected) ||
+                IsNumeric(cbxPlanta.Selected.Value) ||
+                Planta = cbxPlanta.Selected.Result
+                ,
+                IsBlank(cbxEquipo.SelectedItems.Value) ||
+                IsBlank(cbxEquipo.Selected.Result) ||
+                IsEmpty(cbxEquipo.Selected) ||
+                IsNumeric(cbxEquipo.Selected.Value) ||
+                Location = cbxEquipo.Selected.Result
+                ,
+                IsBlank(cbxEstilos.SelectedItems.Value) ||
+                IsBlank(cbxEstilos.Selected.Result) ||
+                IsEmpty(cbxEstilos.Selected) ||
+                IsNumeric(cbxEstilos.Selected.Value) ||
+                ESTILO = cbxEstilos.Selected.Result
+                )
+            )
+        PressedFill: =RGBA(109, 49, 162, 1)
+        SearchFields: =["Result"]
+        SearchItems: |-
+            =Search(Ungroup(
+                Table(
+                    {cbxPlanta: Table({Result:"TODOS",Value:1})},
+                    {
+                        cbxPlanta: Sort(
+                            Filter(
+                                Distinct(
+                                    Plantas,
+                                    Plantas
+                                ),
+                                Not(IsBlank(Result))
+                            )
+                            ,
+                            Result
+                        )
+                    }
+                ),
+                "cbxPlanta"
+            ),cbxPlanta.SearchText,"Result")
+        SelectionFill: =RGBA(109, 49, 162, 1)
+        SelectMultiple: =false
+        Tooltip: ="Pon la planta"
+        Visible: =Not(Parent.Printing)
+        Width: =105
+        X: =75
+        Y: =123
+        ZIndex: =8
+
+    Icon1 As icon.Edit:
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: |-
+            =If(varPermisos = "master",
+            DisplayMode.Edit,
+            DisplayMode.Disabled
+            )
+        Height: =90
+        Icon: =Icon.Edit
+        OnSelect: |-
+            =
+            Set(varmichi,false);
+            Navigate(actualizar,ScreenTransition.Fade)
+        Visible: =Not(Parent.Printing)
+        Width: =90
+        X: =1126
+        Y: =12
+        ZIndex: =9
+
+    Button2_15 As button:
+        AutoDisableOnSelect: =false
+        BorderThickness: =0
+        DisabledBorderColor: =RGBA(109, 49, 162, 1)
+        DisabledColor: =RGBA(255, 255, 255, 1)
+        DisabledFill: =RGBA(255, 0, 0, 1)
+        DisplayMode: =DisplayMode.Disabled
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Text: ="Equipo"
+        Visible: =Not(Parent.Printing)
+        Width: =80
+        X: =526
+        Y: =123
+        ZIndex: =10
+
+    Image13 As image:
+        Image: ='alert-gif-8'
+        X: =154
+        Y: =11
+        ZIndex: =13
+
+    Button2_23 As button:
+        BorderThickness: =0
+        DisabledColor: =RGBA(255, 255, 255, 1)
+        DisabledFill: =RGBA(166, 166, 166, 1)
+        Fill: =RGBA(255, 0, 0, 1)
+        HoverFill: =ColorFade(RGBA(218, 41, 28, 1), -20%)
+        OnSelect: |-
+            =Refresh('Urgencias Por Planta Diario');
+            Refresh('Estilos H1');
+            Refresh(registros);
+        RadiusBottomLeft: =25
+        RadiusBottomRight: =25
+        RadiusTopLeft: =25
+        RadiusTopRight: =25
+        Text: ="Refrescar"
+        Tooltip: ="Actualize la lista"
+        Visible: =Not(Parent.Printing)
+        Width: =108
+        X: =1248
+        Y: =123
+        ZIndex: =14
+
+    cbxSupervisores As combobox:
+        BorderColor: =RGBA(255, 0, 0, 1)
+        BorderThickness: =1
+        ChevronBackground: =RGBA(255, 0, 0, 1)
+        DefaultSelectedItems: =[varnombres]
+        DisplayFields: =["Result"]
+        HoverFill: =RGBA(237, 237, 237, 1)
+        InputTextPlaceholder: ="Pon tu nombre aqui"
+        Items: |-
+            =Ungroup(
+                Table(
+                    {cbxSupervisores: Table({Result:"TODOS",Value:1})},
+                    {
+                        cbxSupervisores: Sort(
+                            Filter(
+                                Distinct(
+                                    colUrgencias,
+                                    Supervisor
+                                ),
+                                Not(IsBlank(Result))
+                            )
+                            ,
+                            Result
+                        )
+                    }
+                ),
+                "cbxSupervisores"
+            )
+        OnChange: |-
+            =ClearCollect(colUrgencias,
+            Filter('Urgencias Por Planta Diario',
+                IsBlank(cbxSupervisores.SelectedItems.Value) ||
+                IsBlank(cbxSupervisores.Selected.Result) ||
+                IsEmpty(cbxSupervisores.Selected) ||
+                IsNumeric(cbxSupervisores.Selected.Value) ||
+                Supervisor = cbxSupervisores.Selected.Result
+                ,
+                IsBlank(cbxPlanta.SelectedItems.Value) ||
+                IsBlank(cbxPlanta.Selected.Result) ||
+                IsEmpty(cbxPlanta.Selected) ||
+                IsNumeric(cbxPlanta.Selected.Value) ||
+                Planta = cbxPlanta.Selected.Result
+                ,
+                IsBlank(cbxEquipo.SelectedItems.Value) ||
+                IsBlank(cbxEquipo.Selected.Result) ||
+                IsEmpty(cbxEquipo.Selected) ||
+                IsNumeric(cbxEquipo.Selected.Value) ||
+                Location = cbxEquipo.Selected.Result
+                ,
+                IsBlank(cbxEstilos.SelectedItems.Value) ||
+                IsBlank(cbxEstilos.Selected.Result) ||
+                IsEmpty(cbxEstilos.Selected) ||
+                IsNumeric(cbxEstilos.Selected.Value) ||
+                ESTILO = cbxEstilos.Selected.Result
+                )
+            )
+        PressedFill: =RGBA(109, 49, 162, 1)
+        SearchFields: =["Result"]
+        SearchItems: |-
+            =Search(Ungroup(
+                Table(
+                    {cbxSupervisores: Table({Result:"TODOS",Value:1})},
+                    {
+                        cbxSupervisores: Sort(
+                            Filter(
+                                Distinct(
+                                    colUrgencias,
+                                    Supervisor
+                                ),
+                                Not(IsBlank(Result))
+                            )
+                            ,
+                            Result
+                        )
+                    }
+                ),
+                "cbxSupervisores"
+            ),cbxSupervisores.SearchText,"Result")
+        SelectionFill: =RGBA(109, 49, 162, 1)
+        SelectMultiple: =false
+        Tooltip: ="Pon la planta"
+        Visible: =Not(Parent.Printing)
+        Width: =215
+        X: =309
+        Y: =123
+        ZIndex: =15
+
+    GaleriaConsulta As gallery.variableTemplateHeightGallery:
+        BorderColor: =RGBA(109, 49, 162, 1)
+        BorderThickness: =2
+        Height: =If(Parent.Printing,Self.TemplateHeight*CountRows(GaleriaConsulta.AllItems),543)
+        Items: |-
+            =Filter('Urgencias Por Planta Diario',
+                IsBlank(cbxEstilos.SelectedItems.Value) ||
+                IsBlank(cbxEstilos.Selected.Result) ||
+                IsEmpty(cbxEstilos.Selected) ||
+                IsNumeric(cbxEstilos.Selected.Value) ||
+                ESTILO = cbxEstilos.Selected.Result
+                ,
+                IsBlank(cbxSupervisores.SelectedItems.Value) ||
+                IsBlank(cbxSupervisores.Selected.Result) ||
+                IsEmpty(cbxSupervisores.Selected) ||
+                IsNumeric(cbxSupervisores.Selected.Value) ||
+                Supervisor = cbxSupervisores.Selected.Result
+                ,
+                IsBlank(cbxPlanta.SelectedItems.Value) ||
+                IsBlank(cbxPlanta.Selected.Result) ||
+                IsEmpty(cbxPlanta.Selected) ||
+                IsNumeric(cbxPlanta.Selected.Value) ||
+                Planta = cbxPlanta.Selected.Result,
+            
+                IsBlank(cbxEquipo.SelectedItems.Value) ||
+                IsBlank(cbxEquipo.Selected.Result) ||
+                IsEmpty(cbxEquipo.Selected) ||
+                IsNumeric(cbxEquipo.Selected.Value) ||
+                Location = cbxEquipo.Selected.Result
+            )
+        Layout: =Layout.Vertical
+        TemplateSize: =40
+        Width: =1366
+        Y: =224
+        ZIndex: =16
+
+        Label6 As label:
+            Align: =Align.Justify
+            Height: =41
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.'ApparelNet Lot'
+            Width: =121
+            ZIndex: =1
+
+        Label7 As label:
+            Align: =Align.Justify
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.Location
+            Width: =242
+            X: =535
+            ZIndex: =2
+
+        Label8 As label:
+            Align: =Align.Justify
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.ESTILO
+            Width: =81
+            X: =121
+            ZIndex: =3
+
+        Label9 As label:
+            Align: =Align.Justify
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.COLOR
+            Width: =67
+            X: =202
+            ZIndex: =4
+
+        Label10 As label:
+            Align: =Align.Justify
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.TALLA
+            Width: =47
+            X: =270
+            ZIndex: =5
+
+        Label11 As label:
+            Align: =Align.Justify
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.Planta
+            Width: =53
+            X: =335
+            ZIndex: =6
+
+        Label12 As label:
+            Align: =Align.Justify
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.Supervisor
+            Width: =191
+            X: =760
+            ZIndex: =7
+
+        Label2 As label:
+            Align: =Align.Center
+            OnSelect: =Select(Parent)
+            Text: =Text(Value(ThisItem.Requerido),"0.00")
+            X: =1067
+            ZIndex: =8
+
+        Label3 As label:
+            Align: =Align.Center
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.'DZ Lote'
+            Width: =128
+            X: =938
+            ZIndex: =9
+
+        Label4 As label:
+            Align: =Align.Justify
+            OnSelect: =Select(Parent)
+            Text: =Text(Value(ThisItem.'%Efectividad'),"0.00%")
+            Width: =114
+            X: =1241
+            ZIndex: =10
+
+        Label15 As label:
+            Align: =Align.Center
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.'Issued Date'
+            X: =388
+            ZIndex: =11
+
+    Label1 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =75
+        Size: =20
+        Text: ="¡¡¡Hola!!! " & User().FullName
+        Width: =554
+        X: =307
+        Y: =30
+        ZIndex: =17
+
+    Rectangle6 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =5
+        Width: =1366
+        X: =
+        Y: =183
+        ZIndex: =18
+
+    Label5 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Size: =12
+        Text: ="ApparelNet Lot"
+        Width: =128
+        Y: =188
+        ZIndex: =19
+
+    Label5_1 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Size: =12
+        Text: ="Estilo"
+        Width: =63
+        X: =135
+        Y: =188
+        ZIndex: =20
+
+    Label5_2 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Size: =12
+        Text: ="Color"
+        Width: =57
+        X: =217
+        Y: =188
+        ZIndex: =21
+
+    Label5_3 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Size: =12
+        Text: ="Talla"
+        Width: =46
+        X: =274
+        Y: =188
+        ZIndex: =22
+
+    Label5_4 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Size: =12
+        Text: ="Planta"
+        Width: =66
+        X: =334
+        Y: =188
+        ZIndex: =23
+
+    Label5_5 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =35
+        Size: =12
+        Text: ="Location"
+        Width: =115
+        X: =581
+        Y: =189
+        ZIndex: =24
+
+    Label5_6 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =36
+        Size: =12
+        Text: ="Supervisor"
+        Width: =170
+        X: =757
+        Y: =188
+        ZIndex: =25
+
+    Label5_7 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =35
+        Size: =12
+        Text: ="DZ Lote"
+        Width: =129
+        X: =938
+        Y: =189
+        ZIndex: =26
+
+    Label5_8 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =36
+        Size: =12
+        Text: |-
+            ="Requerido
+            "
+        Width: =136
+        X: =1080
+        Y: =188
+        ZIndex: =27
+
+    Label5_9 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =35
+        Size: =12
+        Text: ="%Efectividad"
+        Width: =142
+        X: =1224
+        Y: =189
+        ZIndex: =28
+
+    Rectangle6_1 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =128
+        Y: =188
+        ZIndex: =29
+
+    Rectangle6_2 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =204
+        Y: =188
+        ZIndex: =30
+
+    Rectangle6_3 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =267
+        Y: =188
+        ZIndex: =31
+
+    Rectangle6_4 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =327
+        Y: =188
+        ZIndex: =32
+
+    Rectangle6_5 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =393
+        Y: =188
+        ZIndex: =33
+
+    Rectangle6_6 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =747
+        Y: =184
+        ZIndex: =34
+
+    Rectangle6_7 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =931
+        Y: =184
+        ZIndex: =35
+
+    Rectangle6_8 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =1073
+        Y: =188
+        ZIndex: =36
+
+    Rectangle6_9 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =1217
+        Y: =188
+        ZIndex: =37
+
+    Label5_20 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =35
+        Size: =12
+        Text: ="Issued Date"
+        Width: =130
+        X: =400
+        Y: =189
+        ZIndex: =38
+
+    Rectangle6_10 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =7
+        X: =530
+        Y: =184
+        ZIndex: =39
+
+    Icon8 As icon.Bug:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =90
+        Icon: =Icon.Bug
+        OnSelect: =Navigate(BugsReport,ScreenTransition.Fade);
+        Visible: =Not(Parent.Printing)
+        Width: =90
+        X: =878
+        Y: =12
+        ZIndex: =40
+
+    Icon7 As icon.Folder:
+        Color: =RGBA(255, 255, 255, 1)
+        DisplayMode: |-
+            =If(varPermisos = "manager",
+            DisplayMode.Edit,
+            DisplayMode.Disabled
+            )
+        Height: =90
+        Icon: =Icon.Folder
+        OnSelect: =Navigate(IngenieriaConsulta,ScreenTransition.Fade)
+        Width: =90
+        X: =1248
+        Y: =12
+        ZIndex: =41
+
+    Icon2 As icon.RadarActivityMonitor:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =90
+        Icon: =Icon.RadarActivityMonitor
+        Width: =90
+        X: =1007
+        Y: =12
+        ZIndex: =42
+
+    cbxEquipo As combobox:
+        BorderColor: =RGBA(255, 0, 0, 1)
+        BorderThickness: =1
+        ChevronBackground: =RGBA(255, 0, 0, 1)
+        DisplayFields: =["Result"]
+        Height: =38
+        HoverFill: =RGBA(237, 237, 237, 1)
+        InputTextPlaceholder: ="Equipos"
+        Items: |-
+            =Ungroup(
+                Table(
+                    {cbxEquipo: Table({Result:"TODOS",Value:1})},
+                    {
+                        cbxEquipo: Sort(
+                            Filter(
+                                Distinct(
+                                    colUrgencias,
+                                    Location
+                                ),
+                                Not(IsBlank(Result))
+                            )
+                            ,
+                            Result
+                        )
+                    }
+                ),
+                "cbxEquipo"
+            )
+        OnChange: |-
+            =ClearCollect(colUrgencias,
+            Filter('Urgencias Por Planta Diario',
+                IsBlank(cbxSupervisores.SelectedItems.Value) ||
+                IsBlank(cbxSupervisores.Selected.Result) ||
+                IsEmpty(cbxSupervisores.Selected) ||
+                IsNumeric(cbxSupervisores.Selected.Value) ||
+                Supervisor = cbxSupervisores.Selected.Result
+                ,
+                IsBlank(cbxPlanta.SelectedItems.Value) ||
+                IsBlank(cbxPlanta.Selected.Result) ||
+                IsEmpty(cbxPlanta.Selected) ||
+                IsNumeric(cbxPlanta.Selected.Value) ||
+                Planta = cbxPlanta.Selected.Result
+                ,
+                IsBlank(cbxEquipo.SelectedItems.Value) ||
+                IsBlank(cbxEquipo.Selected.Result) ||
+                IsEmpty(cbxEquipo.Selected) ||
+                IsNumeric(cbxEquipo.Selected.Value) ||
+                Location = cbxEquipo.Selected.Result
+                ,
+                IsBlank(cbxEstilos.SelectedItems.Value) ||
+                IsBlank(cbxEstilos.Selected.Result) ||
+                IsEmpty(cbxEstilos.Selected) ||
+                IsNumeric(cbxEstilos.Selected.Value) ||
+                ESTILO = cbxEstilos.Selected.Result
+                )
+            )
+        PressedFill: =RGBA(109, 49, 162, 1)
+        SearchFields: =["Result"]
+        SearchItems: |-
+            =Search(Ungroup(
+                Table(
+                    {cbxEquipo: Table({Result:"TODOS",Value:1})},
+                    {
+                        cbxEquipo: Sort(
+                            Filter(
+                                Distinct(
+                                    colUrgencias,
+                                    Location
+                                ),
+                                Not(IsBlank(Result))
+                            )
+                            ,
+                            Result
+                        )
+                    }
+                ),
+                "cbxEquipo"
+            ),cbxEquipo.SearchText,"Result")
+        SelectionFill: =RGBA(109, 49, 162, 1)
+        SelectMultiple: =false
+        Tooltip: ="Pon la planta"
+        Visible: |
+            =true
+        Width: =248
+        X: =606
+        Y: =123
+        ZIndex: =43
+
+    cbxEstilos As combobox:
+        BorderColor: =RGBA(255, 0, 0, 1)
+        BorderThickness: =1
+        ChevronBackground: =RGBA(255, 0, 0, 1)
+        DisplayFields: =["Result"]
+        Height: =38
+        HoverFill: =RGBA(237, 237, 237, 1)
+        InputTextPlaceholder: ="Digita el estilo"
+        Items: |-
+            =Ungroup(
+                Table(
+                    {cbxEstilos: Table({Result:"TODOS",Value:1})},
+                    {
+                        cbxEstilos: Sort(
+                            Filter(
+                                Distinct(
+                                    colUrgencias,
+                                    ESTILO
+                                ),
+                                Not(IsBlank(Result))
+                            )
+                            ,
+                            Result
+                        )
+                    }
+                ),
+                "cbxEstilos"
+            )
+        OnChange: |-
+            =ClearCollect(colUrgencias,
+            Filter('Urgencias Por Planta Diario',
+                IsBlank(cbxSupervisores.SelectedItems.Value) ||
+                IsBlank(cbxSupervisores.Selected.Result) ||
+                IsEmpty(cbxSupervisores.Selected) ||
+                IsNumeric(cbxSupervisores.Selected.Value) ||
+                Supervisor = cbxSupervisores.Selected.Result
+                ,
+                IsBlank(cbxPlanta.SelectedItems.Value) ||
+                IsBlank(cbxPlanta.Selected.Result) ||
+                IsEmpty(cbxPlanta.Selected) ||
+                IsNumeric(cbxPlanta.Selected.Value) ||
+                Planta = cbxPlanta.Selected.Result
+                ,
+                IsBlank(cbxEquipo.SelectedItems.Value) ||
+                IsBlank(cbxEquipo.Selected.Result) ||
+                IsEmpty(cbxEquipo.Selected) ||
+                IsNumeric(cbxEquipo.Selected.Value) ||
+                Location = cbxEquipo.Selected.Result
+                ,
+                IsBlank(cbxEstilos.SelectedItems.Value) ||
+                IsBlank(cbxEstilos.Selected.Result) ||
+                IsEmpty(cbxEstilos.Selected) ||
+                IsNumeric(cbxEstilos.Selected.Value) ||
+                ESTILO = cbxEstilos.Selected.Result
+                )
+            )
+        PressedFill: =RGBA(109, 49, 162, 1)
+        SearchFields: =["Result"]
+        SearchItems: |-
+            =Search(Ungroup(
+                Table(
+                    {cbxEstilos: Table({Result:"TODOS",Value:1})},
+                    {
+                        cbxEstilos: Sort(
+                            Filter(
+                                Distinct(
+                                    colUrgencias,
+                                    ESTILO
+                                ),
+                                Not(IsBlank(Result))
+                            )
+                            ,
+                            Result
+                        )
+                    }
+                ),
+                "cbxEstilos"
+            ),cbxEstilos.SearchText,"Result")
+        SelectionFill: =RGBA(109, 49, 162, 1)
+        SelectMultiple: =false
+        Tooltip: ="Pon el estilo aqui"
+        Visible: |
+            =true
+        Width: =184
+        X: =930
+        Y: =123
+        ZIndex: =44
+
